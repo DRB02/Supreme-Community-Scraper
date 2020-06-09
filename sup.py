@@ -1,13 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
-from dhooks import Webhook,Embed
+from discord_webhook import DiscordWebhook, DiscordEmbed
 import random
+import time
 
-webhook = ' '
+WebhookUrl = ['webhook1', 'webhook2']
 
-Hook = Webhook(webhook)
-
-droplist_link = 'https://www.supremecommunity.com/season/fall-winter2019/droplist/2019-11-07/'
+mainsite = requests.get('https://supremecommunity.com/season/latest/droplists/')
+droplist = BeautifulSoup(mainsite.text,"lxml")
+link = droplist.find('div',{'id':'box-latest'}).a.get('href')
+droplist_link = 'https://supremecommunity.com/' + link
 
 def main():
     r = requests.get(droplist_link)
@@ -16,26 +18,23 @@ def main():
     for card in cards:
         item = card.find("div",{"class":"card-details"})["data-itemname"]
         img = card.find("img",{"class":"prefill-img"})["src"]
-        image = f'https://supremecommunity.com{img}'
         price = card.find("span",{"class":"label-price"}).text
         price = price.replace(" ","")
         price = price.replace("\n","")
-        upvotes = card.find("p",{"class":"upvotes hidden"}).text
-        downvotes = card.find("p",{"class":"downvotes hidden"}).text
-
-        webhook_name = f'embed_{random.randint(0,9)}{random.randint(0,9)}{random.randint(0,9)}'
-        webhook_name = Embed()
-        webhook_name.set_title(title='Supreme Droplist',url=droplist_link)
-        webhook_name.color = 0x99e8de
-        webhook_name.set_image(url=image)
-        webhook_name.add_field(name='Item',value=f'**{item}**',inline=False)
-        webhook_name.add_field(name='Price',value=f'**{price}**',inline=False)
-        webhook_name.add_field(name='Upvotes',value=f'**{upvotes}**',inline=True)
-        webhook_name.add_field(name='Downvotes',value=f'**{downvotes}**',inline=True)
-        webhook_name.set_footer(text='CharlieAIO | Supreme Droplist')
-        Hook.send(embed=webhook_name)
-        print("| WEBHOOK SENT |")
-
+        #upvotes = card.find("p",{"class":"upvotes hidden"}).text
+        #downvotes = card.find("p",{"class":"downvotes hidden"}).text
         
-if __name__ == "__main__":
-    main()
+        webhook = DiscordWebhook(url=WebhookUrl, username='Supreme Droplist')
+        embed = DiscordEmbed(title='Supreme Droplist', color=0xC90101, url=droplist_link)
+        embed.set_image(url="https://supremecommunity.com"+img)
+        embed.add_embed_field(name='Item:', value='**'+item+'**',inline=False)
+        embed.add_embed_field(name='Price:', value='**'+price+'**',inline=False)
+        embed.set_footer(text='Supreme Droplist | Developed by DRB02#0001')
+        webhook.add_embed(embed)
+        webhook.execute()
+        time.sleep(1)
+        print("| WEBHOOK SENT |")
+    else:
+        print("End of list reached")
+        
+main()
