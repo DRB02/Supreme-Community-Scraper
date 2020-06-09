@@ -1,5 +1,6 @@
 # Supreme-Community-Scraper
 
-- Change droplist link to the week you would like to scrape.
-- insert your webhook.
-- To change webhook colour look for a hex colour you like and add 0x in front.
+- Insert your webhook(s) on line 7. 
+- You can change the embed color on line 28 and the footer text on line 32.
+
+Credits too https://github.com/CharlieAIO/Supreme-Community-Scraper for the original Community Scraper. 
