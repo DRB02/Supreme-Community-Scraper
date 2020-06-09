@@ -4,7 +4,9 @@ from discord_webhook import DiscordWebhook, DiscordEmbed
 import random
 import time
 
-WebhookUrl = ['webhook1', 'webhook2']
+#unquote which one you need
+#WebhookUrl = 'webhook1'
+#WebhookUrl = ['webhook1', 'webhook2']
 
 mainsite = requests.get('https://supremecommunity.com/season/latest/droplists/')
 droplist = BeautifulSoup(mainsite.text,"lxml")
