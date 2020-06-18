@@ -20,9 +20,12 @@ def main():
     for card in cards:
         item = card.find("div",{"class":"card-details"})["data-itemname"]
         img = card.find("img",{"class":"prefill-img"})["src"]
-        price = card.find("span",{"class":"label-price"}).text
-        price = price.replace(" ","")
-        price = price.replace("\n","")
+        try:
+            price = card.find("span",{"class":"label-price"}).text
+            price = price.replace(" ","")
+            price = price.replace("\n","")
+        except:
+            price = 'Unknown'
         #upvotes = card.find("p",{"class":"upvotes hidden"}).text
         #downvotes = card.find("p",{"class":"downvotes hidden"}).text
         
