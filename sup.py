@@ -37,7 +37,7 @@ def main():
         embed.set_footer(text='Supreme Droplist | Developed by DRB02#0001')
         webhook.add_embed(embed)
         webhook.execute()
-        time.sleep(1)
+        time.sleep(0.5)
         print("| WEBHOOK SENT |")
     else:
         print("End of list reached")
