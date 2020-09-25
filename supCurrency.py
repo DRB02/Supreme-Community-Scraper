@@ -5,7 +5,8 @@ import random
 import time
 
 #unquote which one you need
-WebhookUrl = 'https://discordapp.com/api/webhooks/636360687668690985/ap5AMc15BLz4M4SM84uiW2Wx93KiUbnx7BkVyRjAfD2fXn7c7qjf0HlWtbZO16i1CkJ-'
+#WebhookUrl = 'webhook1'
+#WebhookUrl = ['webhook1', 'webhook2']
 
 
 mainsite = requests.get('https://supremecommunity.com/season/latest/droplists/')
